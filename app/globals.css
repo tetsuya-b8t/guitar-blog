@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
-@theme {
-  --color-background: oklch(8% 0.005 285);
-  --color-surface:    oklch(11% 0.006 285);
-  --color-accent:     oklch(55% 0.28 340);
-  --color-ink:        oklch(88% 0.008 285);
-  --color-ink-2:      oklch(66% 0.008 285);
-  --color-rule:       oklch(18% 0.006 285);
-  --color-tag-bg:     oklch(12% 0.04 340);
-  --color-tag-border: oklch(22% 0.06 340);
+:root {
+  --color-background:  oklch(100% 0 0);
+  --color-surface:     oklch(97% 0.005 340);
+  --color-accent:      oklch(48% 0.28 340);
+  --color-ink:         oklch(12% 0.005 285);
+  --color-ink-2:       oklch(45% 0.008 285);
+  --color-rule:        oklch(90% 0.004 285);
+  --color-rule-strong: oklch(12% 0.005 285);
+  --color-tag-bg:      oklch(97% 0.015 340);
+  --color-tag-border:  oklch(85% 0.06 340);
+  --color-header:      oklch(8% 0.004 285);
 }
 
 body {
@@ -43,7 +45,7 @@ body {
   margin: 0.875rem 0;
   line-height: 1.9;
   font-size: 1rem;
-  color: oklch(80% 0.008 285);
+  color: oklch(25% 0.005 285);
 }
 .prose ul {
   margin: 0.875rem 0;
@@ -53,7 +55,7 @@ body {
 .prose li {
   margin: 0.3rem 0;
   line-height: 1.8;
-  color: oklch(80% 0.008 285);
+  color: oklch(25% 0.005 285);
 }
 .prose strong {
   font-weight: 700;

@@ -1,5 +1,5 @@
-/* Hallmark · component: ArticlePage · genre: black-magenta · design-system: globals.css
- * 記事詳細。h2にマゼンタ左ボーダー、カテゴリタグ、prose16px。
+/* Hallmark · component: ArticlePage · genre: white-magenta · design-system: globals.css
+ * 白背景で読みやすさ確保。黒ヘッダーはトップと統一。
  */
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -30,13 +30,12 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--color-background)' }}>
-      <header style={{ background: 'oklch(5% 0.004 285)', borderBottom: '1px solid var(--color-rule)' }}>
-        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-2 text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--color-ink-2)' }}>
-          <Link href="/" style={{ color: 'var(--color-ink-2)', transitionProperty: 'color', transitionDuration: '120ms' }}
-            className="hover:text-white">
+      <header style={{ background: 'var(--color-header)' }}>
+        <div className="max-w-3xl mx-auto px-6 py-4 flex items-center gap-2 text-xs font-mono uppercase tracking-wider" style={{ color: '#555560' }}>
+          <Link href="/" className="hover:text-white" style={{ transitionProperty: 'color', transitionDuration: '120ms' }}>
             Guitar<span style={{ color: 'var(--color-accent)' }}>·</span>Mania
           </Link>
-          <span style={{ color: 'var(--color-rule)' }}>/</span>
+          <span>/</span>
           <span>{catLabel}</span>
         </div>
       </header>
@@ -44,7 +43,7 @@ export default async function ArticlePage({ params }: Props) {
       <main className="max-w-2xl mx-auto px-6 py-12">
         <div className="mb-10">
           <span
-            className="inline-block mb-4 text-xs px-2 py-0.5 font-mono tracking-wider"
+            className="inline-block mb-4 text-xs px-2 py-0.5 font-mono tracking-wider font-bold"
             style={{ color: 'var(--color-accent)', background: 'var(--color-tag-bg)', border: '1px solid var(--color-tag-border)' }}
           >
             {tag}
@@ -70,6 +69,14 @@ export default async function ArticlePage({ params }: Props) {
           </Link>
         </div>
       </main>
+
+      <footer style={{ background: 'var(--color-header)', borderTop: '3px solid var(--color-accent)' }}>
+        <div className="max-w-3xl mx-auto px-6 py-5">
+          <p className="text-xs font-mono font-bold uppercase tracking-widest" style={{ color: '#f0f0f6' }}>
+            Guitar<span style={{ color: 'var(--color-accent)' }}>·</span>Mania
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }
