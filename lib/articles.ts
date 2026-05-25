@@ -16,15 +16,34 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   osusume: 'おすすめCD',
 }
 
+export const CATEGORY_TAGS: Record<Category, string> = {
+  efect: 'REVIEW',
+  otodukuri: 'TECHNIQUE',
+  syosinsya: 'BEGINNER',
+  guitarist: 'GEAR',
+  osusume: 'MUSIC',
+}
+
 export interface ArticleMeta {
   slug: string
   category: Category
   title: string
   date: string
+  excerpt: string
 }
 
 export interface Article extends ArticleMeta {
   contentHtml: string
+}
+
+function extractExcerpt(content: string): string {
+  const lines = content.split('\n').map(l => l.trim())
+  for (const line of lines) {
+    if (!line || line.startsWith('#') || line.startsWith('---')) continue
+    const cleaned = line.replace(/[*_`[\]()]/g, '').trim()
+    if (cleaned.length > 10) return cleaned.slice(0, 80) + (cleaned.length > 80 ? '…' : '')
+  }
+  return ''
 }
 
 export function getAllArticles(): ArticleMeta[] {
@@ -39,12 +58,13 @@ export function getAllArticles(): ArticleMeta[] {
     for (const file of files) {
       const filePath = path.join(catDir, file)
       const raw = fs.readFileSync(filePath, 'utf-8')
-      const { data } = matter(raw)
+      const { data, content } = matter(raw)
       articles.push({
         slug: data.slug as string,
         category: cat as Category,
         title: data.title as string,
         date: data.date as string,
+        excerpt: extractExcerpt(content),
       })
     }
   }
@@ -79,6 +99,7 @@ export async function getArticle(category: string, slug: string): Promise<Articl
     category: data.category as Category,
     title: data.title as string,
     date: data.date as string,
+    excerpt: extractExcerpt(content),
     contentHtml,
   }
 }

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'ギターマニア',
+  title: 'Guitar Mania',
   description: 'エフェクター・音作り・初心者向けギター情報',
 }
 
