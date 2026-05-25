@@ -1,3 +1,6 @@
+/* Hallmark · component: ArticlePage · genre: guitar-editorial · design-system: globals.css
+ * 記事詳細。h2にアクセントバー、proseクラスでglobals.cssのスタイルを適用。
+ */
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getArticle, getAllSlugs, CATEGORY_LABELS, type Category } from '@/lib/articles'
@@ -25,27 +28,49 @@ export default async function ArticlePage({ params }: Props) {
   const catLabel = CATEGORY_LABELS[article.category as Category] ?? article.category
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-10">
-      <nav className="mb-6 text-sm text-gray-500">
-        <Link href="/" className="hover:underline">トップ</Link>
-        <span className="mx-2">/</span>
-        <span>{catLabel}</span>
-      </nav>
+    <div className="min-h-screen" style={{ background: 'var(--color-background)' }}>
+      <header className="border-b" style={{ borderColor: 'var(--color-rule)' }}>
+        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-2 text-xs" style={{ color: 'var(--color-ink-2)' }}>
+          <Link href="/" className="hover:underline" style={{ textDecorationColor: 'var(--color-accent)', textUnderlineOffset: '2px' }}>
+            ギターマニア
+          </Link>
+          <span>/</span>
+          <span>{catLabel}</span>
+        </div>
+      </header>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-6 leading-snug">
-        {article.title}
-      </h1>
+      <main className="max-w-2xl mx-auto px-4 py-10">
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <span
+              className="text-xs px-2 py-0.5 rounded font-medium"
+              style={{ background: 'var(--color-card)', color: 'var(--color-ink-2)', border: '1px solid var(--color-rule)' }}
+            >
+              {catLabel}
+            </span>
+          </div>
+          <h1 className="text-2xl font-bold leading-snug" style={{ color: 'var(--color-ink)' }}>
+            {article.title}
+          </h1>
+          <div className="h-0.5 w-12 mt-4" style={{ background: 'var(--color-accent)' }} />
+        </div>
 
-      <article
-        className="prose prose-sm max-w-none text-gray-800 leading-7"
-        dangerouslySetInnerHTML={{ __html: article.contentHtml }}
-      />
+        <article
+          className="prose text-sm"
+          style={{ color: 'var(--color-ink)' }}
+          dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+        />
 
-      <div className="mt-12 pt-6 border-t border-gray-200">
-        <Link href="/" className="text-blue-700 hover:underline text-sm">
-          ← 記事一覧に戻る
-        </Link>
-      </div>
-    </main>
+        <div className="mt-14 pt-6 border-t" style={{ borderColor: 'var(--color-rule)' }}>
+          <Link
+            href="/"
+            className="text-xs hover:underline"
+            style={{ color: 'var(--color-ink-2)', textDecorationColor: 'var(--color-accent)', textUnderlineOffset: '2px' }}
+          >
+            ← 記事一覧に戻る
+          </Link>
+        </div>
+      </main>
+    </div>
   )
 }
