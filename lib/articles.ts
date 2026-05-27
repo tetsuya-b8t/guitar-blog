@@ -6,6 +6,14 @@ import html from 'remark-html'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content/articles')
 
+function fileToUrlSlug(filename: string): string {
+  const name = filename.replace(/\.md$/, '')
+  const ascii = name.replace(/[^\x00-\x7F]+/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
+  if (ascii) return ascii
+  // Fallback for all-Japanese filenames
+  return Buffer.from(name).toString('base64url').slice(0, 24)
+}
+
 export type Category = 'efect' | 'otodukuri' | 'syosinsya' | 'guitarist' | 'osusume'
 
 export const CATEGORY_LABELS: Record<Category, string> = {
@@ -26,6 +34,7 @@ export const CATEGORY_TAGS: Record<Category, string> = {
 
 export interface ArticleMeta {
   slug: string
+  urlSlug: string
   category: Category
   title: string
   date: string
@@ -61,6 +70,7 @@ export function getAllArticles(): ArticleMeta[] {
       const { data, content } = matter(raw)
       articles.push({
         slug: data.slug as string,
+        urlSlug: fileToUrlSlug(file),
         category: cat as Category,
         title: data.title as string,
         date: data.date as string,
@@ -76,16 +86,12 @@ export function getArticlesByCategory(category: Category): ArticleMeta[] {
   return getAllArticles().filter(a => a.category === category)
 }
 
-export async function getArticle(category: string, slug: string): Promise<Article | null> {
+export async function getArticle(category: string, urlSlug: string): Promise<Article | null> {
   const catDir = path.join(CONTENT_DIR, category)
   if (!fs.existsSync(catDir)) return null
 
-  const files = fs.readdirSync(catDir)
-  const file = files.find(f => {
-    const raw = fs.readFileSync(path.join(catDir, f), 'utf-8')
-    const { data } = matter(raw)
-    return data.slug === slug
-  })
+  const files = fs.readdirSync(catDir).filter(f => f.endsWith('.md'))
+  const file = files.find(f => fileToUrlSlug(f) === urlSlug)
 
   if (!file) return null
 
@@ -96,6 +102,7 @@ export async function getArticle(category: string, slug: string): Promise<Articl
 
   return {
     slug: data.slug as string,
+    urlSlug: fileToUrlSlug(file),
     category: data.category as Category,
     title: data.title as string,
     date: data.date as string,
@@ -114,9 +121,7 @@ export function getAllSlugs(): { category: string; slug: string }[] {
     const files = fs.readdirSync(catDir).filter(f => f.endsWith('.md'))
 
     for (const file of files) {
-      const raw = fs.readFileSync(path.join(catDir, file), 'utf-8')
-      const { data } = matter(raw)
-      slugs.push({ category: cat, slug: data.slug as string })
+      slugs.push({ category: cat, slug: fileToUrlSlug(file) })
     }
   }
 

@@ -49,7 +49,7 @@ export default function Home() {
               <ul>
                 {catArticles.map((a, i) => (
                   <li key={a.slug} style={{ borderBottom: '1px solid var(--color-rule)' }}>
-                    <Link href={`/articles/${a.category}/${a.slug}`} className="group block py-4 grid grid-cols-[28px_1fr] gap-3">
+                    <Link href={`/articles/${a.category}/${a.urlSlug}`} className="group block py-4 grid grid-cols-[28px_1fr] gap-3">
                       <span className="text-xs font-mono pt-0.5" style={{ color: '#ccc' }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
