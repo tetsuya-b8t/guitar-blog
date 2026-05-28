@@ -80,10 +80,17 @@ export default function Home() {
       </main>
 
       <footer style={{ background: 'var(--color-header)', borderTop: '3px solid var(--color-accent)' }}>
-        <div className="max-w-3xl mx-auto px-6 py-5">
+        <div className="max-w-3xl mx-auto px-6 py-5 space-y-3">
           <p className="text-xs font-mono font-bold uppercase tracking-widest" style={{ color: '#f0f0f6' }}>
             Guitar<span style={{ color: 'var(--color-accent)' }}>·</span>Mania
           </p>
+          <p className="text-xs leading-relaxed" style={{ color: '#555560' }}>
+            当サイトはAmazon.co.jpアソシエイトプログラムの参加者です。記事内のAmazonリンクを経由して購入された場合、当サイトに紹介料が支払われることがあります。
+          </p>
+          <div className="flex gap-5">
+            <Link href="/privacy" className="text-xs hover:underline" style={{ color: '#555560' }}>プライバシーポリシー</Link>
+            <Link href="/contact" className="text-xs hover:underline" style={{ color: '#555560' }}>お問い合わせ</Link>
+          </div>
         </div>
       </footer>
     </div>
